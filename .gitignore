@@ -67,3 +67,4 @@ target/
 /media/
 
 runserver
+.vagrant/

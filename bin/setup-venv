@@ -1,0 +1,10 @@
+#!/bin/bash
+. /usr/local/bin/virtualenvwrapper.sh
+mkvirtualenv coworkok
+workon coworkok
+cd /vagrant
+setvirtualenvproject
+echo 'source /usr/local/bin/virtualenvwrapper.sh' >> /home/vagrant/.zshrc_project
+echo 'workon coworkok' >> /home/vagrant/.zshrc_project
+pip install psycopg2
+pip install -r /vagrant/requirements.txt

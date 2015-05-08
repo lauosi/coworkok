@@ -1,0 +1,21 @@
+#!/bin/bash
+if [[ $EUID != 0 ]]; then
+    sudo $0
+    exit
+fi
+
+export DEBIAN_FRONTEND=noninteractive
+export PAGER=cat
+curl -sL https://deb.nodesource.com/setup | bash -
+apt-get install -y python python-dev postgresql-9.4 postgresql-server-dev-9.4 postgresql-9.4-postgis-2.1 nodejs build-essential
+npm install -g less
+python /vagrant/bin/ez_setup.py
+easy_install -U pip setuptools
+pip install virtualenvwrapper
+
+sudo -u vagrant /vagrant/bin/setup-venv
+service postgresql start
+systemctl enable postgresql
+sudo -u postgres psql -f /vagrant/bin/setup.sql
+
+echo './bin/run to run the project.' > /etc/motd
