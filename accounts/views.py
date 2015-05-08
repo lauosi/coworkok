@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from accounts.forms import UserCreationForm, LoginForm
 from accounts.const import *
 from cowork.forms import CompanyCreationForm, LocationCreationForm
+from cowork.models import Desk
 
 
 class RegistrationView(generic.TemplateView):
@@ -46,6 +47,8 @@ class RegistrationView(generic.TemplateView):
                     location = location_form.save(commit=False)
                     location.company = company
                     location.save()
+                    for desk in xrange(location.total_desks):
+                        Desk.objects.create(location_id=location.id)
                     forms_valid = True
             else:
                 forms_valid = True

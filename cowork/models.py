@@ -31,7 +31,7 @@ class Location(models.Model):
 class Desk(models.Model):
     owner = models.OneToOneField('accounts.User', related_name='desks',
         null=True)
-    location = models.OneToOneField(Location, related_name='desks')
+    location = models.ForeignKey(Location, related_name='desks')
     rent_start_date = models.DateTimeField(null=True)
     rent_end_date = models.DateTimeField(null=True)
 

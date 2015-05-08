@@ -8,6 +8,7 @@ from braces import views
 from .. import forms
 from .. import models
 from .. import mixins
+from cowork.models import Desk
 
 
 class LocationListView(mixins.UserMixin, views.LoginRequiredMixin, generic.ListView):
@@ -36,4 +37,7 @@ class LocationAddView(mixins.UserMixin, views.LoginRequiredMixin, generic.FormVi
             self.object = form.save(commit=False)
             self.object.company = self.user.companies.first()
             self.object.save()
+            for desk in xrange(self.object.total_desks):
+                Desk.objects.create(location_id=self.object.id)
+
         return HttpResponseRedirect(self.get_success_url())

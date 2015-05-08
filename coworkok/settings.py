@@ -28,6 +28,7 @@ INSTALLED_APPS = (
 GENERIC_APPS = (
     'authtools',
     'pipeline',
+    'rest_framework',
 )
 
 LOCAL_APPS = (
@@ -73,10 +74,11 @@ WSGI_APPLICATION = 'coworkok.wsgi.application'
 
 # Database
 
-import dj_database_url
-
 DATABASES = {
-    'default': dj_database_url.config(default = 'sqlite://test.db'),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
 
 
@@ -98,7 +100,7 @@ USE_TZ = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
