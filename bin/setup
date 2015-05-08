@@ -13,7 +13,7 @@ python /vagrant/bin/ez_setup.py
 easy_install -U pip setuptools
 pip install virtualenvwrapper
 
-sudo -u vagrant /vagrant/bin/setup-venv
+sudo -u vagrant bash /vagrant/bin/setup-venv
 service postgresql start
 systemctl enable postgresql
 sudo -u postgres psql -f /vagrant/bin/setup.sql
