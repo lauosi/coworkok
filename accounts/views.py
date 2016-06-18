@@ -20,7 +20,7 @@ class RegistrationView(generic.TemplateView):
         context = self.get_context_data(**kwargs)
         user_form = UserCreationForm(prefix="user")
         company_form = CompanyCreationForm(prefix="company")
-        location_form = LocationCreationForm(prefix="location")
+        location_form = LocationCreationForm(request.FILES or None, prefix="location")
         context.update({'user_form': user_form,
                         'company_form': company_form,
                         'location_form': location_form})
@@ -28,7 +28,7 @@ class RegistrationView(generic.TemplateView):
 
     def post(self, request, *args, **kwargs):
         user_form = UserCreationForm(request.POST, prefix="user")
-        company_form = CompanyCreationForm(request.POST, prefix="company")
+        company_form = CompanyCreationForm(request.POST, request.FILES or None, prefix="company")
         location_form = LocationCreationForm(request.POST, prefix="location")
         forms_valid = False
 

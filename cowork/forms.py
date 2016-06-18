@@ -5,7 +5,7 @@ from cowork.models import *
 class CompanyCreationForm(forms.ModelForm):
     class Meta:
         model = Company
-        fields = ('name', )
+        fields = ('name', 'vat_id', 'website', 'logo',)
         labels = {
             'name': 'Company name'
         }

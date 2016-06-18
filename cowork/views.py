@@ -22,7 +22,7 @@ class DashboardView(mixins.UserMixin, LoginRequiredMixin, TemplateView):
 
 def search(request):
     errors = []
-    if 'q' in request.GET: #request.GET.get("q"):
+    if 'q' in request.GET:
         q = request.GET['q']
         if not q:
             errors.append('Enter a search term.')

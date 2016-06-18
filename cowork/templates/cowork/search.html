@@ -33,33 +33,39 @@
   </div>
 
   <div class="container">
-    {% if locations %}
-      <p>You searched for: <strong>{{ query }}</strong></p>
-      <p>Found {{ locations|length }} location{{ locations|pluralize}}.</p>
-      <ul class="location-list">
-        {% for location in locations %}
-          <li>
-            <h3>{{location.company.name}}</h3>
-            <p>
-            Total desks: {{location.total_desks}}
-            </p>
-            <p>
-            Free desks: {{location.free_desks}}
-            </p>
-            <p>
-            Price per desk: {{location.price}}$
-            </p>
-            <a href="#" class="btn btn-primary">
-            Rent desk
-            </a>
-          </li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      {% if query %}
-        <p>No location matched your search criteria.</p>
+    <div class="row">
+      {% if locations %}
+        <p>Found {{ locations|length }} location{{ locations|pluralize}}.</p>
+        <ul class="location-list">
+          {% for location in locations %}
+            <li>
+              {% if location.company.logo %}
+                <img src="{{location.company.logo.url}}" class="img-responsive"/>
+              {% else %}
+                <img src="http://placehold.it/100x100">
+              {% endif %}
+              <h3>{{location.company.name}}</h3>
+              <p>
+              Total desks: {{location.total_desks}}
+              </p>
+              <p>
+              Free desks: {{location.free_desks}}
+              </p>
+              <p>
+              Price per desk: {{location.price}}$
+              </p>
+              <a href="#" class="btn btn-primary">
+              Rent desk
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        {% if query %}
+          <p>No location matched your search criteria.</p>
+        {% endif %}
       {% endif %}
-    {% endif %}
+    </div>
   </div>
 
 {% endblock %}
