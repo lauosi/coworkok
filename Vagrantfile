@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-    config.vm.box = 'dook/docker'
+	config.vm.box = "dook/debian-python"
     config.vm.network 'forwarded_port', guest: 8000, host: 8000
 
     config.vm.provider 'virtualbox' do |vb|

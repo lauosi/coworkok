@@ -1,5 +1,6 @@
 from django.views.generic import TemplateView
 from authtools.views import LoginRequiredMixin
+from django.shortcuts import render
 from accounts import const
 
 from . import mixins
@@ -16,6 +17,18 @@ class DashboardView(mixins.UserMixin, LoginRequiredMixin, TemplateView):
         return context
 
 
-class SearchView(TemplateView):
-    template_name = 'cowork/search.html'
+##class SearchView(TemplateView):
+##    template_name = 'cowork/search.html'
 
+def search(request):
+    errors = []
+    if 'q' in request.GET: #request.GET.get("q"):
+        q = request.GET['q']
+        if not q:
+            errors.append('Enter a search term.')
+        elif len(q) > 30:
+            errors.append('Please enter at most 30 characters.')
+        else:
+            locations = models.Location.objects.filter(city__icontains=q)
+            return render(request, 'cowork/search.html', {'locations': locations, 'query': q}) 
+    return render(request, 'cowork/search.html', {'errors': errors})

@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from django.core.validators import RegexValidator
 from django.db import models
 
 
@@ -6,6 +7,11 @@ class Company(models.Model):
     user = models.ForeignKey('accounts.User',
                              related_name='companies')
     name = models.CharField(max_length=100)
+    #Requires the Pillow library.
+    
+    #vat_id = models.BigIntegerField(verbose_name='VAT-ID', blank=True)
+    #website = models.URLField(blank=True)
+    #logo = models.ImageField(upload_to = 'logo')
 
     def __unicode__(self):
         return self.name
@@ -15,6 +21,10 @@ class Location(models.Model):
     company = models.ForeignKey('Company',
         related_name='locations')
     city = models.CharField(max_length=200)
+    # Requires the Pillow library.
+    
+    #address = models.CharField(max_length=50)
+    #postal_code = models.CharField(max_length=6, validators=[RegexValidator(r'^\d\d-\d\d\d$')])
     total_desks = models.IntegerField(verbose_name='Total desks')
     reserved_desks = models.IntegerField(verbose_name='Reserved desks')
     price = models.DecimalField(verbose_name='Price per desk $',
@@ -34,6 +44,6 @@ class Desk(models.Model):
     location = models.OneToOneField(Location, related_name='desks')
     rent_start_date = models.DateTimeField(null=True)
     rent_end_date = models.DateTimeField(null=True)
-
+    
     def __unicode__(self):
         return '%s' % self.location

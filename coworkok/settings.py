@@ -76,9 +76,8 @@ WSGI_APPLICATION = 'coworkok.wsgi.application'
 import dj_database_url
 
 DATABASES = {
-    'default': dj_database_url.config(default = 'sqlite://test.db'),
+   'default': dj_database_url.config(default = 'sqlite://test.db'),
 }
-
 
 # Internationalization
 
