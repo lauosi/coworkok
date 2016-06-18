@@ -14,7 +14,7 @@ class CompanyCreationForm(forms.ModelForm):
 class LocationCreationForm(forms.ModelForm):
     class Meta:
         model = Location
-        fields = ('city', 'total_desks', 'reserved_desks', 'price')
+        fields = ('city', 'address', 'postal_code', 'total_desks', 'reserved_desks', 'price')
 
 
 ##class SearchForm(forms.Form):

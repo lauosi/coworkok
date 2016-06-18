@@ -29,8 +29,8 @@ class Location(models.Model):
     company = models.ForeignKey('Company',
         related_name='locations')
     city = models.CharField(max_length=200)
-    #address = models.CharField(max_length=50)
-    #postal_code = models.CharField(max_length=6, validators=[RegexValidator(r'^\d\d-\d\d\d$')])
+    address = models.CharField(max_length=50, blank=True, null=True)
+    postal_code = models.CharField(max_length=6, validators=[RegexValidator(r'^\d\d-\d\d\d$')], blank=True, null=True)
     total_desks = models.IntegerField(verbose_name='Total desks')
     reserved_desks = models.IntegerField(verbose_name='Reserved desks')
     price = models.DecimalField(verbose_name='Price per desk $',
