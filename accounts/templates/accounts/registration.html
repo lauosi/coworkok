@@ -4,17 +4,12 @@
   <div class="container">
     <div class="row">
       <div class="col-md-offset-3 col-md-6">
-		{% if form.is_multipart %}
-			<form enctype="multipart/form-data" method="POST">{% csrf_token %}
-		{% else %}
-			<form method="post">{% csrf_token %}
-		{% endif %}
+        <form enctype="multipart/form-data" method="POST">{% csrf_token %}
           <h2>Please sign up</h2>
           <h4 class="subheader">1. User</h4>
           <ul id="user-form">
             {{ user_form.as_ul }}
           </ul>
-          <!-- get rid of other h4! -->
           <h4 class="subheader">2. Company</h4>
           <ul id="company-form">
             {{ company_form.as_ul }}
