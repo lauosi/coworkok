@@ -22,9 +22,9 @@ class LocationListView(mixins.UserMixin, views.LoginRequiredMixin, generic.ListV
             return self.coworker_template_name
 
     def get_queryset(self):
-        # TODO: get office of given users
+        if self.user.user_type == const.USER_TYPE_COWORKER:
+            return models.Desk.objects.filter(owner=self.user)
         return models.Location.objects.filter(company__user=self.user)
-
 
 class LocationAddView(mixins.UserMixin, views.LoginRequiredMixin, generic.FormView):
     form_class = forms.LocationCreationForm

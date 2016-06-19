@@ -11,6 +11,10 @@ class User(AbstractEmailUser):
     user_type = models.IntegerField(choices=USER_TYPE_CHOICES,
         default=USER_TYPE_COMPANY)
 
+    # sprawdz
+    def change_for_coworker(self):
+        self.user_type = USER_TYPE_COWORKER
+        
     @cached_property
     def is_company_type(self):
         return self.user_type == USER_TYPE_COMPANY

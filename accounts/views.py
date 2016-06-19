@@ -15,20 +15,24 @@ class RegistrationView(generic.TemplateView):
     """
     template_name = 'accounts/registration.html'
     success_url = reverse_lazy('cowork:dashboard')
-
+    
     def get(self, request, *args, **kwargs):
+        filters = self.args[0]
         context = self.get_context_data(**kwargs)
         user_form = UserCreationForm(prefix="user")
         company_form = CompanyCreationForm(prefix="company")
-        location_form = LocationCreationForm(request.FILES or None, prefix="location")
-        context.update({'user_form': user_form,
+        location_form = LocationCreationForm(prefix="location")
+        if filters == 'user':
+            context.update({'user_form': user_form})
+        else:
+            context.update({'user_form': user_form,
                         'company_form': company_form,
                         'location_form': location_form})
         return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
         user_form = UserCreationForm(request.POST, prefix="user")
-        company_form = CompanyCreationForm(request.POST, request.FILES or None, prefix="company")
+        company_form = CompanyCreationForm(request.POST, request.FILES, prefix="company")
         location_form = LocationCreationForm(request.POST, prefix="location")
         forms_valid = False
 

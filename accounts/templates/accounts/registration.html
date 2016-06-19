@@ -10,14 +10,16 @@
 			<form method="post">{% csrf_token %}
 		{% endif %}
           <h2>Please sign up</h2>
-          <h4 class="subheader">1. Company</h4>
-          <ul id="company-form">
-            {{ company_form.as_ul }}
-          </ul>
+          <h4 class="subheader">1. User</h4>
           <ul id="user-form">
             {{ user_form.as_ul }}
           </ul>
-          <h4 class="subheader">2. Locations</h4>
+          <!-- get rid of other h4! -->
+          <h4 class="subheader">2. Company</h4>
+          <ul id="company-form">
+            {{ company_form.as_ul }}
+          </ul>
+          <h4 class="subheader">3. Locations</h4>
           <ul id="location-form">
             {{ location_form.as_ul }}
           </ul>
