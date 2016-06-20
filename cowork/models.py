@@ -45,6 +45,9 @@ class Location(models.Model):
     def free_desks(self):
         return self.total_desks - self.reserved_desks
 
+    def reserve_desk(self):
+        self.reserved_desks += 1
+
 
 class Desk(models.Model):
     owner = models.ForeignKey('accounts.User', related_name='owner',

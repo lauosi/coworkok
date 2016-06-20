@@ -54,9 +54,10 @@
               <p>
               Price per desk: {{location.price}}$
               </p>
-              <a href="{% url 'cowork:locations:rent' pk=location.id%}" class="btn btn-primary">
-              Rent desk
-              </a>
+              {% if location.free_desks > 0 %}
+                <a href="{% url 'cowork:locations:rent' pk=location.id%}" class="btn btn-primary"> Rent desk
+                </a>
+              {% endif %}
             </li>
           {% endfor %}
         </ul>

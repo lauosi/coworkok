@@ -57,6 +57,8 @@ class RentDeskView(mixins.UserMixin, views.LoginRequiredMixin, generic.FormView)
             rent = rent_form.save(commit=False)
             rent.owner = self.user
             rent.location = models.Location.objects.get(id=location_id)
+            rent.location.reserve_desk()
+            rent.location.save()
             rent.save()
             return HttpResponseRedirect(self.get_success_url())
 
