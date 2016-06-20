@@ -26,7 +26,11 @@ class Company(models.Model):
     def __str__(self):
         return self.name
 
-
+class LocationManager(models.Manager):
+    def get_queryset(self):
+        free_desks = total_desks - reserved_desks
+        return super(LocationManager, self).get_queryset().filter(free_desks__gt=0)
+    
 class Location(models.Model):
     company = models.ForeignKey('Company',
         related_name='locations')
@@ -37,6 +41,8 @@ class Location(models.Model):
     reserved_desks = models.IntegerField(verbose_name='Reserved desks')
     price = models.DecimalField(verbose_name='Price per desk $',
         max_digits=12, decimal_places=2)
+    objects = models.Manager()
+    free_objects = LocationManager()
 
     def __str__(self):
         return '%s, %s' % (self.company, self.city)
