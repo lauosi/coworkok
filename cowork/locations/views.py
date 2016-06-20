@@ -38,14 +38,28 @@ class LocationAddView(mixins.UserMixin, views.LoginRequiredMixin, generic.FormVi
             self.object.company = self.user.companies.first()
             self.object.save()
         return HttpResponseRedirect(self.get_success_url())
-
+    
 class RentDeskView(mixins.UserMixin, views.LoginRequiredMixin, generic.FormView):
-    form_class = forms.RentingDeskForm
     template_name = "cowork/locations/coworker/location_rent.html"
     success_url = reverse_lazy('cowork:locations:list')
+    
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        rent_form = forms.RentingDeskForm()
+        context.update({'rent_form': rent_form})
+        return self.render_to_response(context)
 
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.owner = self.user
-        self.object.save()
-        return HttpResponseRedirect(self.get_success_url())
+    def post(self, request, *args, **kwargs):
+        location_id = self.kwargs['pk']
+        rent_form = forms.RentingDeskForm(request.POST)
+        
+        if rent_form.is_valid():
+            rent = rent_form.save(commit=False)
+            rent.owner = self.user
+            rent.location = models.Location.objects.get(id=location_id)
+            rent.save()
+            return HttpResponseRedirect(self.get_success_url())
+
+        context = self.get_context_data(**kwargs)
+        context.update({'rent_form': rent_form})
+        return self.render_to_response(context)

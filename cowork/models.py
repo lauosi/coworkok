@@ -23,7 +23,7 @@ class Company(models.Model):
     height_field = models.IntegerField(default=0)
     width_field = models.IntegerField(default=0)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -38,8 +38,8 @@ class Location(models.Model):
     price = models.DecimalField(verbose_name='Price per desk $',
         max_digits=12, decimal_places=2)
 
-    def __unicode__(self):
-        return '%s' % (self.city)
+    def __str__(self):
+        return '%s, %s' % (self.company, self.city)
 
     @property
     def free_desks(self):
@@ -53,11 +53,13 @@ class Desk(models.Model):
     rent_start_date = models.DateTimeField(default=timezone.now)
     rent_end_date = models.DateTimeField(default = timezone.now() + timezone.timedelta(days=30))
     
-    def __unicode__(self):
-        return '%s' % self.location
+    def __str__(self):
+        return '%s' % self.location.company.name
+    
     def days_of_rent(self):
         # calculates total number of days of rent
         return (self.rent_end_date - self.rent_start_date).days
+    
     def final_price(self):
         # calculates final price for desk for indicated period
         return self.days_of_rent() * self.location.price

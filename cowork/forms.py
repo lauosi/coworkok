@@ -20,4 +20,4 @@ class LocationCreationForm(forms.ModelForm):
 class RentingDeskForm(forms.ModelForm):
     class Meta:
         model = Desk
-        fields = ('location','rent_start_date', 'rent_end_date')
+        fields = ('rent_start_date', 'rent_end_date')
