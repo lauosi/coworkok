@@ -27,15 +27,16 @@ class RegistrationView(generic.TemplateView):
         else:
             context.update({'user_form': user_form,
                         'company_form': company_form,
-                        'location_form': location_form})
+                        'location_form': location_form,
+                        'company': True})
         return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
-        user_form = UserCreationForm(request.POST, prefix="user")
+        user_form = UserCreationForm(request.POST, initial={'user_type': 1}, prefix="user")
         company_form = CompanyCreationForm(request.POST, request.FILES, prefix="company")
         location_form = LocationCreationForm(request.POST, prefix="location")
         forms_valid = False
-
+        
         if user_form.is_valid():
             user = user_form.save(commit=False)
             if user.user_type == USER_TYPE_COMPANY:

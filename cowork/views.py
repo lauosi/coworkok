@@ -19,6 +19,15 @@ class DashboardView(mixins.UserMixin, LoginRequiredMixin, TemplateView):
 
 ##class SearchView(TemplateView):
 ##    template_name = 'cowork/search.html'
+##    model = models.Location
+##    
+##    def get_context_data(self, request, **kwargs):
+##        q = request.GET['q']
+##        context = super(SearchView, self).get_context_data(**kwargs)
+##        if args:
+##            context['locations'] = models.Location.objects.filter(city__icontains=q)
+##        return context
+       
 
 def search(request):
     errors = []
