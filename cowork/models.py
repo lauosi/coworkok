@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from django.core.validators import RegexValidator
 from django.db import models
+from django.utils import timezone
 
 def upload_location(instance, filename):
     return "%s/%s" %(instance.id, filename)
@@ -45,11 +46,11 @@ class Location(models.Model):
 
 
 class Desk(models.Model):
-    owner = models.OneToOneField('accounts.User', related_name='desks',
+    owner = models.ForeignKey('accounts.User', related_name='owner',
         null=True)
-    location = models.OneToOneField(Location, related_name='desks')
-    rent_start_date = models.DateTimeField(null=True)
-    rent_end_date = models.DateTimeField(null=True)
+    location = models.ForeignKey(Location, related_name='location')
+    rent_start_date = models.DateTimeField(default=timezone.now)
+    rent_end_date = models.DateTimeField(default = timezone.now() + timezone.timedelta(days=30))
     
     def __unicode__(self):
         return '%s' % self.location

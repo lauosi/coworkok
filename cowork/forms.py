@@ -1,6 +1,6 @@
 from django import forms
 from cowork.models import *
-
+from django.contrib.admin import widgets
 
 class CompanyCreationForm(forms.ModelForm):
     class Meta:
@@ -17,5 +17,7 @@ class LocationCreationForm(forms.ModelForm):
         fields = ('city', 'address', 'postal_code', 'total_desks', 'reserved_desks', 'price')
 
 
-##class SearchForm(forms.Form):
-##    location = forms.CharField(max_length=200)
+class RentingDeskForm(forms.ModelForm):
+    class Meta:
+        model = Desk
+        fields = ('location','rent_start_date', 'rent_end_date')

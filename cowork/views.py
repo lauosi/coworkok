@@ -14,6 +14,8 @@ class DashboardView(mixins.UserMixin, LoginRequiredMixin, TemplateView):
         context = super(DashboardView, self).get_context_data(**kwargs)
         if self.user.user_type == const.USER_TYPE_COMPANY:
             context['last_locations'] = models.Location.objects.filter(company__user=self.user)[:5]
+        else:
+            context['last_locations'] = models.Desk.objects.filter(owner=self.user)[:5]
         return context
 
 

@@ -24,7 +24,8 @@ class LocationListView(mixins.UserMixin, views.LoginRequiredMixin, generic.ListV
     def get_queryset(self):
         if self.user.user_type == const.USER_TYPE_COWORKER:
             return models.Desk.objects.filter(owner=self.user)
-        return models.Location.objects.filter(company__user=self.user)
+        else:
+            return models.Location.objects.filter(company__user=self.user)
 
 class LocationAddView(mixins.UserMixin, views.LoginRequiredMixin, generic.FormView):
     form_class = forms.LocationCreationForm
@@ -36,4 +37,15 @@ class LocationAddView(mixins.UserMixin, views.LoginRequiredMixin, generic.FormVi
             self.object = form.save(commit=False)
             self.object.company = self.user.companies.first()
             self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+class RentDeskView(mixins.UserMixin, views.LoginRequiredMixin, generic.FormView):
+    form_class = forms.RentingDeskForm
+    template_name = "cowork/locations/coworker/location_rent.html"
+    success_url = reverse_lazy('cowork:locations:list')
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.owner = self.user
+        self.object.save()
         return HttpResponseRedirect(self.get_success_url())

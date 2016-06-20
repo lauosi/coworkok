@@ -11,6 +11,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>City</th>
                         <th>Name</th>
                         <th>Address</th>
                         <th>From date</th>
@@ -22,11 +23,12 @@
                     {% for loc in location_list %}
                     <tr>
                         <td>{{foorloop.counter}}</td>
-                        <td>{{loc.name}}</td>
-                        <td>{{loc.address}}</td>
-                        <td>{{loc.from_date}}</td>
-                        <td>{{loc.until_date}}</td>
-                        <td>{{loc.price}}</td>
+                        <td>{{loc.location.city}}</td>
+                        <td>{{loc.location.company.name}}</td>
+                        <td>{{loc.location.address}}</td>
+                        <td>{{loc.rent_start_date}}</td>
+                        <td>{{loc.rent_end_date}}</td>
+                        <td>{{loc.location.price}}$</td>
                     </tr>
                     {% endfor %}
                 </tbody>
