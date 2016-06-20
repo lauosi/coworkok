@@ -9,7 +9,7 @@ from accounts.const import *
 
 class User(AbstractEmailUser):
     user_type = models.IntegerField(choices=USER_TYPE_CHOICES,
-        default=USER_TYPE_COMPANY
+        default=USER_TYPE_COMPANY)
         
     @cached_property
     def is_company_type(self):

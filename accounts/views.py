@@ -19,12 +19,13 @@ class RegistrationView(generic.TemplateView):
     def get(self, request, *args, **kwargs):
         filters = self.args[0]
         context = self.get_context_data(**kwargs)
-        user_form = UserCreationForm(prefix="user")
         company_form = CompanyCreationForm(prefix="company")
         location_form = LocationCreationForm(prefix="location")
         if filters == 'user':
+            user_form = UserCreationForm(initial={"user_type": "0"}, prefix="user")
             context.update({'user_form': user_form})
         else:
+            user_form = UserCreationForm(initial={"user_type": "1"}, prefix="user")
             context.update({'user_form': user_form,
                         'company_form': company_form,
                         'location_form': location_form,
@@ -32,7 +33,7 @@ class RegistrationView(generic.TemplateView):
         return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
-        user_form = UserCreationForm(request.POST, initial={'user_type': 1}, prefix="user")
+        user_form = UserCreationForm(request.POST, prefix="user")
         company_form = CompanyCreationForm(request.POST, request.FILES, prefix="company")
         location_form = LocationCreationForm(request.POST, prefix="location")
         forms_valid = False
