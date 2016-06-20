@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from django.core.validators import RegexValidator
 from django.db import models
 from django.utils import timezone
+import datetime as dt
 
 def upload_location(instance, filename):
     return "%s/%s" %(instance.id, filename)
@@ -54,3 +55,10 @@ class Desk(models.Model):
     
     def __unicode__(self):
         return '%s' % self.location
+    def days_of_rent(self):
+        # calculates total number of days of rent
+        return (self.rent_end_date - self.rent_start_date).days
+    def final_price(self):
+        # calculates final price for desk for indicated period
+        return self.days_of_rent() * self.location.price
+        
