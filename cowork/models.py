@@ -4,8 +4,8 @@ from django.db import models
 from django.utils import timezone
 import datetime as dt
 
-def upload_location(instance, filename):
-    return "%s/%s" %(instance.id, filename)
+def upload_logo(company, filename):
+    return "%s/%s" %(company.user.id, filename)
 
 class Company(models.Model):
     user = models.ForeignKey('accounts.User',
@@ -15,7 +15,7 @@ class Company(models.Model):
                               validators=[RegexValidator(r'^\d{10}$')],
                               verbose_name='VAT-ID', blank=True, null=True)
     website = models.URLField(blank=True, null=True)
-    logo = models.ImageField(upload_to = 'logo',
+    logo = models.ImageField(upload_to = upload_logo,
                             null=True,
                             blank=True,
                             width_field="width_field",

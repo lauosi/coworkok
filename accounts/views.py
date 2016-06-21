@@ -34,7 +34,7 @@ class RegistrationView(generic.TemplateView):
 
     def post(self, request, *args, **kwargs):
         user_form = UserCreationForm(request.POST, prefix="user")
-        company_form = CompanyCreationForm(request.POST, request.FILES, prefix="company")
+        company_form = CompanyCreationForm(request.POST, request.FILES or None, prefix="company")
         location_form = LocationCreationForm(request.POST, prefix="location")
         forms_valid = False
         
