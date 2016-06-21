@@ -23,6 +23,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.gis',
 )
 
 GENERIC_APPS = (
@@ -78,6 +79,7 @@ import dj_database_url
 DATABASES = {
    'default': dj_database_url.config(default = 'sqlite://test.db'),
 }
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 # Internationalization
 

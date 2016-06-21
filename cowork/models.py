@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from django.core.validators import RegexValidator
-from django.db import models
+#from django.db import models
+from django.contrib.gis.db import models
 from django.utils import timezone
 import datetime as dt
 
@@ -37,6 +38,7 @@ class Location(models.Model):
     city = models.CharField(max_length=200)
     address = models.CharField(max_length=50, blank=True, null=True)
     postal_code = models.CharField(max_length=6, validators=[RegexValidator(r'^\d\d-\d\d\d$')], blank=True, null=True)
+    #geolocation = models.PointField(null=True, blank=True)
     total_desks = models.IntegerField(verbose_name='Total desks')
     reserved_desks = models.IntegerField(verbose_name='Reserved desks')
     price = models.DecimalField(verbose_name='Price per desk $',

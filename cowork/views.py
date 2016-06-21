@@ -18,19 +18,6 @@ class DashboardView(mixins.UserMixin, LoginRequiredMixin, TemplateView):
             context['last_locations'] = models.Desk.objects.filter(owner=self.user)[:5]
         return context
 
-
-##class SearchView(TemplateView):
-##    template_name = 'cowork/search.html'
-##    model = models.Location
-##    
-##    def get_context_data(self, request, **kwargs):
-##        q = request.GET['q']
-##        context = super(SearchView, self).get_context_data(**kwargs)
-##        if args:
-##            context['locations'] = models.Location.objects.filter(city__icontains=q)
-##        return context
-       
-
 def search(request):
     errors = []
     if 'q' in request.GET:
@@ -39,11 +26,12 @@ def search(request):
             errors.append('Enter a search term.')
         elif len(q) > 30:
             errors.append('Please enter at most 30 characters.')
-        elif 'f' in request.GET:
-            f = request.GET['f']
-            if f == "display_free":
-                locations = models.Location.objects.filter(city__icontains=q).extra(where=["total_desks-reserved_desks > 0"])
         else:
-            locations = models.Location.objects.filter(city__icontains=q)
-        return render(request, 'cowork/search.html', {'locations': locations, 'query': q}) 
+            if 'f' in request.GET:
+                f = request.GET['f']
+                if f == "display_free":
+                    locations = models.Location.objects.filter(city__icontains=q).extra(where=["total_desks-reserved_desks > 0"])
+            else:
+                locations = models.Location.objects.filter(city__icontains=q)
+            return render(request, 'cowork/search.html', {'locations': locations, 'query': q}) 
     return render(request, 'cowork/search.html', {'errors': errors})
