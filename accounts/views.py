@@ -33,6 +33,7 @@ class RegistrationView(generic.TemplateView):
         return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
+        filters = self.args[0]
         user_form = UserCreationForm(request.POST, prefix="user")
         company_form = CompanyCreationForm(request.POST, request.FILES or None, prefix="company")
         location_form = LocationCreationForm(request.POST, prefix="location")
@@ -61,11 +62,15 @@ class RegistrationView(generic.TemplateView):
                                     password=user_form.cleaned_data['password1'])
                 login(self.request, user)
                 return redirect('cowork:dashboard')
-
+            
         context = self.get_context_data(**kwargs)
-        context.update({'user_form': user_form,
+        if filters == 'user':
+            context.update({'user_form': user_form})
+        else:
+            context.update({'user_form': user_form,
                         'company_form': company_form,
-                        'location_form': location_form})
+                        'location_form': location_form,
+                        'company': True})
         return self.render_to_response(context)
         
 class LoginView(generic.FormView):

@@ -82,4 +82,9 @@ class Desk(models.Model):
     def final_price(self):
         # calculates final price for desk for indicated period
         return self.days_of_rent() * self.location.price
-        
+    
+    def clean(self):
+        if self.rent_end_date and self.rent_start_date:
+            delta = (self.rent_end_date - self.rent_start_date).days
+            if delta <= 0:
+                raise ValidationError('Incorrent dates.')
