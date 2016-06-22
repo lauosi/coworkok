@@ -3,6 +3,9 @@ from django.core.validators import RegexValidator
 #from django.db import models
 from django.contrib.gis.db import models
 from django.utils import timezone
+from django.core.validators import MaxValueValidator
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
 import datetime as dt
 
 def upload_logo(company, filename):
@@ -55,6 +58,10 @@ class Location(models.Model):
 
     def reserve_desk(self):
         self.reserved_desks += 1
+
+    def clean(self):
+         if self.reserved_desks > self.total_desks:
+             raise ValidationError('Must be less than total number of desks.')
 
 
 class Desk(models.Model):

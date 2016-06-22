@@ -67,13 +67,12 @@ class RegistrationView(generic.TemplateView):
                         'company_form': company_form,
                         'location_form': location_form})
         return self.render_to_response(context)
-
-
+        
 class LoginView(generic.FormView):
     template_name = 'accounts/login.html'
     form_class = LoginForm
     success_url = reverse_lazy('cowork:dashboard')
-
+    
     def form_valid(self, form):
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']

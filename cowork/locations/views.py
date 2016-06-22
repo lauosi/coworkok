@@ -42,7 +42,7 @@ class LocationAddView(mixins.UserMixin, views.LoginRequiredMixin, generic.FormVi
 class RentDeskView(mixins.UserMixin, views.LoginRequiredMixin, generic.FormView):
     template_name = "cowork/locations/coworker/location_rent.html"
     success_url = reverse_lazy('cowork:locations:list')
-    
+
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         rent_form = forms.RentingDeskForm()
