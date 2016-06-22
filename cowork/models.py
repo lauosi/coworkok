@@ -60,6 +60,7 @@ class Location(models.Model):
         self.reserved_desks += 1
 
     def clean(self):
+        if self.reserved_desks and self.total_desks:
          if self.reserved_desks > self.total_desks:
              raise ValidationError('Must be less than total number of desks.')
 

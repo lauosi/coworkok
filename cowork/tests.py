@@ -22,8 +22,8 @@ class CreationFormTests(TestCase):
         form = CompanyCreationForm(data=form_data)
         self.assertEqual(form.is_valid(), False)
 
-    def test_location_without_name(self):
-        form_data = {'total_desks': 10, 'reserved_desks': 5}
+    def test_location_without(self):
+        form_data = {}
         form = LocationCreationForm(data=form_data)
         self.assertEqual(form.is_valid(), False)
 
