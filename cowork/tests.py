@@ -18,13 +18,21 @@ def create_company(name):
     return Company.objects.create(user=user, name=name)
 
 class CreationFormTests(TestCase):
-        
+    
     def test_company_without(self):
         """
         Without data
         """
         form_data = {}
         form = CompanyCreationForm(data=form_data)
+        self.assertEqual(form.is_valid(), False)
+
+    def test_user_without(self):
+        """
+        Without data
+        """
+        form_data = {}
+        form = UserCreationForm(data=form_data)
         self.assertEqual(form.is_valid(), False)
 
     def test_location_without(self):
@@ -76,6 +84,25 @@ class CreationFormTests(TestCase):
         form_data = {'city': 'Wrocław', 'postal_code': 1236,'total_desks': 10, 'reserved_desks': 15, 'price': 5.0}
         form = LocationCreationForm(data=form_data)
         self.assertEqual(form.is_valid(), False)
+
+    def test_user_email(self):
+        """
+        Wrong email
+        """
+        form_data = {'user_type':0, 'email':'toemail', 'password': 'password'}
+        form = UserCreationForm(data=form_data)
+        self.assertEqual(form.is_valid(), False)
+
+    def test_company_clone(self):
+        """
+        Two companies with the same name
+        """
+        company1 = create_company('Company1')
+        form_data = {'name': 'Company1'}
+        form = CompanyCreationForm(data=form_data)
+        self.assertEqual(form.is_valid(), False)
+        
+        
 
 
 

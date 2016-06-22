@@ -14,7 +14,7 @@ def upload_logo(company, filename):
 class Company(models.Model):
     user = models.ForeignKey('accounts.User',
                              related_name='companies')
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     vat_id = models.CharField(max_length=10,
                               validators=[RegexValidator(r'^\d{10}$')],
                               verbose_name='VAT-ID', blank=True, null=True)
